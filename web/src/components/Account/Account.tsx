@@ -1,10 +1,10 @@
-import "./Auth.scss";
+import "./Account.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { changeAuth } from "@/redux/auth";
 import { State } from "@/redux/types";
 import Image from "next/image";
 
-export const Auth = () => {
+export const Account = () => {
   const isAuth = useSelector((state: State) => state.auth.isAuth);
   const dispatch = useDispatch();
 

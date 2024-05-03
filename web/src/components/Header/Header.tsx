@@ -1,11 +1,11 @@
-import { Auth } from "../Auth/Auth";
+import { Account } from "../Account";
 import "./Header.scss";
 
 export const Header = () => {
   return (
     <div className="header">
       Logo
-      <Auth />
+      <Account />
     </div>
   );
 };

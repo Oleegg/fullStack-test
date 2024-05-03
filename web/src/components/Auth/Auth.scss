@@ -1,3 +1,28 @@
 .auth {
-  cursor: pointer;
+  &-wrapper {
+  }
+  &-btn-wrapper {
+    padding: 10px 0;
+  }
+}
+
+.title {
+  text-align: start;
+  padding-left: 20px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  border-radius: 5px;
+  border: 1px solid #000;
+}
+
+.error-text {
+  color: red;
+  min-height: 20px;
+  font-size: 13px;
 }
