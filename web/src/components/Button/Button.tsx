@@ -26,12 +26,13 @@ export const TransparentButton = ({
 };
 
 export const CloseButton = ({
+  children,
   type = "button",
   ...rest
 }: ButtonHTMLAttributes<HTMLButtonElement>): JSX.Element => {
   return (
     <button className="button transparent close-btn" type={type} {...rest}>
-      X
+      {children}
     </button>
   );
 };

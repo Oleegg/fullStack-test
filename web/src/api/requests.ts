@@ -39,14 +39,14 @@ export const getAuthUserData = async (token: string) => {
 
 //--------------user----------------------
 export const deleteUser = async (id: number, token: string) => {
-  await clientQueryConfig.delete(`/users/${id}`, {
+  await clientQueryConfig.delete(`users/${id}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
 };
 
 export const getUser = async (id: number, token: string) => {
   try {
-    return await clientQueryConfig.get(`/users/${id}`, {
+    return await clientQueryConfig.get(`users/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
   } catch (error) {
@@ -67,7 +67,45 @@ export const changeUser = async (
 ) => {
   const data = JSON.stringify({ ...user });
 
-  return await clientQueryConfig.put(`/users/${id}`, data, {
+  return await clientQueryConfig.put(`users/${id}`, data, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};
+
+//--------------List---------------------
+
+export const createItem = async (text: string, token: string) => {
+  const data = JSON.stringify({ todo: text });
+  return await clientQueryConfig.post(`list/create`, data, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};
+
+export const getList = async (token: string) => {
+  try {
+    return await clientQueryConfig.get("list", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      if (error.response) {
+        return error.response?.data;
+      }
+      return error;
+    }
+    console.log("getUser", error);
+  }
+};
+
+export const deleteItem = async (id: number, token: string) => {
+  await clientQueryConfig.delete(`list/${id}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};
+
+export const changeItem = async (id: number, text: string, token: string) => {
+  const data = JSON.stringify({ todo: text });
+  return await clientQueryConfig.put(`list/${id}`, data, {
     headers: { Authorization: `Bearer ${token}` },
   });
 };
