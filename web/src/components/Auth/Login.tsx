@@ -2,14 +2,14 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import { TextInput } from "../Inputs";
 import "./Auth.scss";
 import { Button, CloseButton } from "../Button";
-import { authorization } from "@/api/requests";
+import { authorization, getList } from "@/api/requests";
 import { toast } from "react-toastify";
 import { emailValidation, passwordValidation } from "./utils";
 import Link from "next/link";
 import { Auth } from "@/components/Header/types";
 import { AuthProps, Storage } from "./types";
 import { useDispatch } from "react-redux";
-import { changeStateAuth, createStateUser } from "@/redux/auth";
+import { addStateItems, changeStateAuth, createStateUser } from "@/redux/state";
 
 export const Login = ({ onClose, setAuthType }: AuthProps) => {
   const dispatch = useDispatch();
@@ -44,6 +44,10 @@ export const Login = ({ onClose, setAuthType }: AuthProps) => {
             localStorage.setItem(Storage.Token, token);
             dispatch(createStateUser(user));
             dispatch(changeStateAuth(true));
+            const listRes = await getList(token);
+            if (listRes.status === 200) {
+              dispatch(addStateItems(listRes.data));
+            }
             onClose();
           }
         } catch (e: any) {

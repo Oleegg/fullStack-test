@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { User, emptyUser } from "@/redux/types";
 import { useDispatch } from "react-redux";
-import { changeStateAuth, changeStateUser } from "@/redux/auth";
+import { changeStateAuth, changeStateUser } from "@/redux/state";
 
 export const AccountMenu = ({ user }: { user: User }) => {
   const { name } = user;

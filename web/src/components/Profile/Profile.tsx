@@ -12,7 +12,7 @@ import {
   passwordValidation,
 } from "../Auth/utils";
 import { Button } from "../Button";
-import { changeStateAuth, changeStateUser } from "@/redux/auth";
+import { changeStateAuth, changeStateUser } from "@/redux/state";
 import { changeUser, deleteUser } from "@/api/requests";
 import { toast } from "react-toastify";
 import { Storage } from "../Auth/types";
