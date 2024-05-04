@@ -3,8 +3,7 @@
   background-color: transparent;
   display: flex;
   flex-direction: column;
-  max-width: 250px;
-  width: 100%;
+  min-width: 305px;
   padding: 3px;
 }
 
@@ -28,5 +27,8 @@
   background: transparent;
   &:focus {
     outline: none !important;
+  }
+  &:disabled {
+    border-color: rgb(133, 133, 133);
   }
 }

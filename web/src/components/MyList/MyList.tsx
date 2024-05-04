@@ -3,11 +3,13 @@ import "./MyList.scss";
 import { useSelector } from "react-redux";
 
 export const MyList = () => {
-  const isAuth = useSelector((state: State) => state.auth.isAuth);
+  const isAuth = useSelector((state: State) => state.isAuth);
   return (
     <div className="my-list__wrapper">
       {isAuth ? (
-        <h1>Список добрых дел</h1>
+        <>
+          <h1>Список добрых дел</h1>
+        </>
       ) : (
         <h2>для получения доступа к списку, необходимо войти в профиль</h2>
       )}
