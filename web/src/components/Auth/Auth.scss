@@ -1,0 +1,43 @@
+.auth {
+  &-wrapper {
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+  }
+
+  &-btn-wrapper {
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &-link {
+    color: #1813b5;
+    font-weight: 500;
+  }
+}
+
+.title {
+  text-align: start;
+
+  &-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+}
+
+.error-text {
+  color: red;
+  min-height: 20px;
+  font-size: 13px;
+}
