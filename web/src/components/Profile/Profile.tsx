@@ -6,17 +6,12 @@ import { Wrapper } from "../Wrapper";
 import "./Profile.scss";
 import { State, emptyUser } from "@/redux/types";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import {
-  emailValidation,
-  nameValidation,
-  passwordValidation,
-} from "../Auth/utils";
+import { nameValidation, nicknameValidation } from "../Auth/utils";
 import { Button } from "../Button";
 import { changeStateAuth, changeStateUser } from "@/redux/state";
 import { changeUser, deleteUser } from "@/api/requests";
 import { toast } from "react-toastify";
 import { Storage } from "../Auth/types";
-import { Router } from "next/router";
 import { useRouter } from "next/navigation";
 
 export const Profile = () => {
@@ -24,7 +19,9 @@ export const Profile = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [name, setName] = useState("");
+  const [nickname, setNickname] = useState("");
   const [nameError, setNameError] = useState("");
+  const [nicknameError, setNicknameError] = useState("");
 
   const { id } = user;
 
@@ -32,6 +29,7 @@ export const Profile = () => {
 
   useEffect(() => {
     setName(user.name);
+    setNickname(user.nickname);
   }, [user]);
 
   const changeEmailHandler = () => {};
@@ -42,17 +40,24 @@ export const Profile = () => {
     setName(value);
   };
 
+  const changeNicknameHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    nicknameValidation(value, setNicknameError);
+    setNickname(value);
+  };
+
   const changeUserHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     nameValidation(name, setNameError);
-    if (!nameError) {
+    nicknameValidation(nickname, setNicknameError);
+    if (!nameError && !nicknameError) {
       const changeUserData = async () => {
         try {
           if (token) {
-            const newUser = { ...user, name };
+            const newUser = { ...user, name, nickname };
             const res = await changeUser(id, newUser, token);
             if (res.status === 200) {
-              dispatch(changeStateUser({ name }));
+              dispatch(changeStateUser({ name, nickname }));
             }
           }
         } catch (e: any) {
@@ -73,6 +78,7 @@ export const Profile = () => {
           dispatch(changeStateAuth(false));
           localStorage.removeItem(Storage.Token);
           console.log("Вы удалили все данные этого пользователя");
+          router.push("/");
         }
       }
     } catch (e) {
@@ -80,7 +86,7 @@ export const Profile = () => {
     }
   };
 
-  const isEdit = user.name !== name;
+  const isEdit = user.name !== name || nickname !== user.nickname;
 
   return (
     <div className="profile-wrapper">
@@ -96,14 +102,18 @@ export const Profile = () => {
                 onChange={changeEmailHandler}
                 disabled={true}
               />
-              <div className="error-text"></div>
               <TextInput
                 label="имя"
                 value={name}
                 onChange={changeNameHandler}
               />
               <div className="error-text">{nameError}</div>
-
+              <TextInput
+                label="никнэйм"
+                value={nickname}
+                onChange={changeNicknameHandler}
+              />
+              <div className="error-text">{nicknameError}</div>
               <div className="profile__btn-wrapper">
                 {isEdit ? (
                   <Button type="submit">Сохранить</Button>

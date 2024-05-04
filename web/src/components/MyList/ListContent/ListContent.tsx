@@ -6,8 +6,6 @@ import { ItemBlock } from "./Item";
 export const ListContent = () => {
   const list = useSelector((state: State) => state.list);
 
-  console.log(list);
-
   return (
     <div className="list">
       <h1>{list.length ? "Список добрых дел" : " "}</h1>

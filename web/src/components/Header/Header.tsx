@@ -33,8 +33,8 @@ export const Header = () => {
       const getUserData = async () => {
         const res = await getAuthUserData(token);
         if (res.status === 200) {
-          const { token: newToken, name, email, id } = res.data;
-          const user = { name, email, id };
+          const { token: newToken, name, nickname, email, id } = res.data;
+          const user = { name, email, id, nickname };
           localStorage.setItem(Storage.Token, newToken);
           dispatch(createStateUser(user));
           dispatch(changeStateAuth(true));

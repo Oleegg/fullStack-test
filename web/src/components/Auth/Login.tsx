@@ -39,8 +39,8 @@ export const Login = ({ onClose, setAuthType }: AuthProps) => {
         try {
           const res = await authorization({ email, password });
           if (res.status === 200) {
-            const { token, name, email, id } = res.data;
-            const user = { name, email, id };
+            const { token, name, nickname, email, id } = res.data;
+            const user = { name, email, nickname, id };
             localStorage.setItem(Storage.Token, token);
             dispatch(createStateUser(user));
             dispatch(changeStateAuth(true));
@@ -62,7 +62,7 @@ export const Login = ({ onClose, setAuthType }: AuthProps) => {
     <div className="auth-wrapper">
       <div className="title-wrapper">
         <h1 className="title">Вход</h1>
-        <CloseButton onClick={onClose} />
+        <CloseButton onClick={onClose}>X</CloseButton>
       </div>
       <form className="form" onSubmit={(e) => changeSubmitHandler(e)}>
         <TextInput
