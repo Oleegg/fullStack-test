@@ -85,8 +85,8 @@ export const ItemBlock = ({ item, i }: { item: Item; i: number }) => {
           <Image
             src="/images/svg/delete.svg"
             alt="delete"
-            width={20}
-            height={20}
+            width={25}
+            height={30}
           />
         </div>
       </div>

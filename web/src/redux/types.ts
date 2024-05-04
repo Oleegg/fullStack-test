@@ -1,6 +1,11 @@
-export type User = { id: number; name: string; email: string };
+export type User = {
+  id: number;
+  name: string;
+  email: string;
+  nickname: string;
+};
 export type Item = { id: number; todo: string };
-export const emptyUser = { id: 0, name: "", email: "" };
+export const emptyUser = { id: 0, name: "", email: "", nickname: "" };
 
 export type State = {
   isAuth: boolean;
@@ -16,7 +21,7 @@ export interface ChangeAuth extends Action {
 }
 
 export interface ChangeUser extends Action {
-  payload: { name?: string; email?: string };
+  payload: { name?: string; email?: string; nickname?: string };
 }
 
 export interface CreateUser extends Action {

@@ -26,6 +26,19 @@ export const emailValidation = (
   }
 };
 
+export const nicknameValidation = (
+  value: string,
+  setNicknameError: Dispatch<SetStateAction<string>>
+) => {
+  if (!value) {
+    setNicknameError("Введите никнэйм");
+  } else if (value[0] !== "@") {
+    setNicknameError("Никнэйм в начале должен иметь @");
+  } else {
+    setNicknameError("");
+  }
+};
+
 export const passwordValidation = (
   value: string,
   setPasswordError: Dispatch<SetStateAction<string>>,

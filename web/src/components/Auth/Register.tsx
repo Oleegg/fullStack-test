@@ -4,7 +4,12 @@ import "./Auth.scss";
 import { Button, CloseButton } from "../Button";
 import { getList, registration } from "@/api/requests";
 import { toast } from "react-toastify";
-import { emailValidation, nameValidation, passwordValidation } from "./utils";
+import {
+  emailValidation,
+  nameValidation,
+  nicknameValidation,
+  passwordValidation,
+} from "./utils";
 import Link from "next/link";
 import { AuthProps, Storage } from "./types";
 import { Auth } from "@/components/Header/types";
@@ -15,9 +20,11 @@ export const Register = ({ onClose, setAuthType }: AuthProps) => {
   const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
   const [nameError, setNameError] = useState("");
   const [emailError, setEmailError] = useState("");
+  const [nicknameError, setNicknameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
   const changeNameHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -32,6 +39,12 @@ export const Register = ({ onClose, setAuthType }: AuthProps) => {
     setEmail(value);
   };
 
+  const changeNicknameHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    nicknameValidation(value, setNicknameError);
+    setNickname(value);
+  };
+
   const changePasswordHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     passwordValidation(value, setPasswordError);
@@ -42,21 +55,24 @@ export const Register = ({ onClose, setAuthType }: AuthProps) => {
     e.preventDefault();
     nameValidation(name, setNameError);
     emailValidation(email, setEmailError);
+    nicknameValidation(nickname, setNicknameError);
     passwordValidation(password, setPasswordError);
     if (
       name &&
       email &&
+      nickname &&
       password &&
       !nameError &&
       !emailError &&
+      !nicknameError &&
       !passwordError
     ) {
       const registrationUser = async () => {
         try {
-          const res = await registration({ name, email, password });
+          const res = await registration({ name, email, nickname, password });
           if (res.status === 200) {
-            const { token, name, email, id } = res.data;
-            const user = { name, email, id };
+            const { token, name, nickname, email, id } = res.data;
+            const user = { name, nickname, email, id };
             localStorage.setItem(Storage.Token, token);
             dispatch(createStateUser(user));
             dispatch(changeStateAuth(true));
@@ -79,7 +95,7 @@ export const Register = ({ onClose, setAuthType }: AuthProps) => {
     <div className="auth-wrapper">
       <div className="title-wrapper">
         <h1 className="title">Регистрация</h1>
-        <CloseButton onClick={onClose} />
+        <CloseButton onClick={onClose}>X</CloseButton>
       </div>
       <form className="form" onSubmit={(e) => changeSubmitHandler(e)}>
         <TextInput
@@ -94,6 +110,12 @@ export const Register = ({ onClose, setAuthType }: AuthProps) => {
           onChange={(e) => changeEmailHandler(e)}
         />
         <div className="error-text">{emailError}</div>
+        <TextInput
+          label="nickname"
+          value={nickname}
+          onChange={(e) => changeNicknameHandler(e)}
+        />
+        <div className="error-text">{nicknameError}</div>
         <TextInput
           label="password"
           value={password}
