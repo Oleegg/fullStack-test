@@ -4,14 +4,17 @@ import { State } from "@/redux/types";
 import { ItemBlock } from "./Item";
 
 export const ListContent = () => {
-  const list = useSelector((state: State) => state.list);
+  const list = useSelector((state: State) => state.user.list);
 
   return (
     <div className="list">
-      <h1>{list.length ? "Список добрых дел" : " "}</h1>
-
       {list.length ? (
-        list.map((item, i) => <ItemBlock i={i} key={item.id} item={item} />)
+        <>
+          <h1>Список добрых дел</h1>
+          {list.map((item, i) => (
+            <ItemBlock i={i} key={i} item={item} />
+          ))}
+        </>
       ) : (
         <p>В списке пока отсутствуют дела</p>
       )}

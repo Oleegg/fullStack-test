@@ -10,7 +10,6 @@ import { nameValidation, nicknameValidation } from "../Auth/utils";
 import { Button } from "../Button";
 import { changeStateAuth, changeStateUser } from "@/redux/state";
 import { changeUser, deleteUser } from "@/api/requests";
-import { toast } from "react-toastify";
 import { Storage } from "../Auth/types";
 import { useRouter } from "next/navigation";
 
@@ -22,6 +21,7 @@ export const Profile = () => {
   const [nickname, setNickname] = useState("");
   const [nameError, setNameError] = useState("");
   const [nicknameError, setNicknameError] = useState("");
+  console.log(user);
 
   const { id } = user;
 
@@ -61,8 +61,7 @@ export const Profile = () => {
             }
           }
         } catch (e: any) {
-          console.error(e);
-          toast.error(e.response?.data.message);
+          console.error(e.response?.data.message);
         }
       };
       changeUserData();

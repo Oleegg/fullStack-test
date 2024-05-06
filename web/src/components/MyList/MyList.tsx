@@ -1,18 +1,17 @@
 import { State } from "@/redux/types";
 import "./MyList.scss";
 import { useSelector } from "react-redux";
-import { CreateList } from "./CreateList/CreateList";
-import { ListContent } from "./ListContent/ListContent";
-import { Search } from "../Search/Search";
+import { CreateItem } from "./CreateItem";
+import { ListContent } from "./ListContent";
 
 export const MyList = () => {
   const isAuth = useSelector((state: State) => state.isAuth);
+
   return (
     <div className="my-list__wrapper">
       {isAuth ? (
         <>
-          <Search />
-          <CreateList />
+          <CreateItem />
           <ListContent />
         </>
       ) : (

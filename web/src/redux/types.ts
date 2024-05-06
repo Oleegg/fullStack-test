@@ -3,14 +3,25 @@ export type User = {
   name: string;
   email: string;
   nickname: string;
+  friend: string[];
+  list: string[];
 };
-export type Item = { id: number; todo: string };
-export const emptyUser = { id: 0, name: "", email: "", nickname: "" };
+interface Todo {
+  todo: string;
+}
+
+export const emptyUser = {
+  id: 0,
+  name: "",
+  email: "",
+  nickname: "",
+  friend: <string[]>[],
+  list: <string[]>[],
+};
 
 export type State = {
   isAuth: boolean;
   user: User;
-  list: Item[];
 };
 interface Action {
   type: string;
@@ -27,15 +38,16 @@ export interface ChangeUser extends Action {
 export interface CreateUser extends Action {
   payload: User;
 }
-//------list----------
+//------------list-----------
 
-export interface StateItem extends Action {
-  payload: Item;
+export interface AddStateList extends Action {
+  payload: string;
 }
+export interface ChangeStateList extends Action {
+  payload: string[];
+}
+//------------Friend-----------------
 
-export interface StateItems extends Action {
-  payload: Item[];
-}
-export interface DeleteStateItem extends Action {
-  payload: number;
+export interface AddStateFriend extends Action {
+  payload: string;
 }

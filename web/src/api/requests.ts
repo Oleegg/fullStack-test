@@ -60,52 +60,25 @@ export const getUser = async (id: number, token: string) => {
   }
 };
 
+export const getListByNick = async (token: string, params: string) => {
+  return await clientQueryConfig.get(`users?${params}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};
+
 export const changeUser = async (
   id: number,
   user: ChangeUser,
   token: string
 ) => {
   const data = JSON.stringify({ ...user });
-
   return await clientQueryConfig.put(`users/${id}`, data, {
     headers: { Authorization: `Bearer ${token}` },
   });
 };
 
-//--------------List---------------------
-
-export const createItem = async (text: string, token: string) => {
-  const data = JSON.stringify({ todo: text });
-  return await clientQueryConfig.post(`list/create`, data, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-};
-
-export const getList = async (token: string) => {
-  try {
-    return await clientQueryConfig.get("list", {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      if (error.response) {
-        return error.response?.data;
-      }
-      return error;
-    }
-    console.log("getUser", error);
-  }
-};
-
-export const deleteItem = async (id: number, token: string) => {
-  await clientQueryConfig.delete(`list/${id}`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-};
-
-export const changeItem = async (id: number, text: string, token: string) => {
-  const data = JSON.stringify({ todo: text });
-  return await clientQueryConfig.put(`list/${id}`, data, {
+export const searchFriend = async (token: string, params: string) => {
+  return await clientQueryConfig.get(`users/search?${params}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
 };

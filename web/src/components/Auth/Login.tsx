@@ -2,14 +2,13 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import { TextInput } from "../Inputs";
 import "./Auth.scss";
 import { Button, CloseButton } from "../Button";
-import { authorization, getList } from "@/api/requests";
-import { toast } from "react-toastify";
+import { authorization } from "@/api/requests";
 import { emailValidation, passwordValidation } from "./utils";
 import Link from "next/link";
 import { Auth } from "@/components/Header/types";
 import { AuthProps, Storage } from "./types";
 import { useDispatch } from "react-redux";
-import { addStateItems, changeStateAuth, createStateUser } from "@/redux/state";
+import { changeStateAuth, createStateUser } from "@/redux/state";
 
 export const Login = ({ onClose, setAuthType }: AuthProps) => {
   const dispatch = useDispatch();
@@ -39,19 +38,16 @@ export const Login = ({ onClose, setAuthType }: AuthProps) => {
         try {
           const res = await authorization({ email, password });
           if (res.status === 200) {
-            const { token, name, nickname, email, id } = res.data;
-            const user = { name, email, nickname, id };
+            const { token, name, nickname, email, id, friend, list } = res.data;
+            const user = { name, email, nickname, id, friend, list };
             localStorage.setItem(Storage.Token, token);
             dispatch(createStateUser(user));
             dispatch(changeStateAuth(true));
-            const listRes = await getList(token);
-            if (listRes.status === 200) {
-              dispatch(addStateItems(listRes.data));
-            }
+
             onClose();
           }
         } catch (e: any) {
-          toast.error(e.response?.data.message);
+          console.log(e.response?.data.message);
         }
       };
       registrationUser();

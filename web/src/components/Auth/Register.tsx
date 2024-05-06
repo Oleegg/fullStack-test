@@ -2,8 +2,7 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import { TextInput } from "../Inputs";
 import "./Auth.scss";
 import { Button, CloseButton } from "../Button";
-import { getList, registration } from "@/api/requests";
-import { toast } from "react-toastify";
+import { registration } from "@/api/requests";
 import {
   emailValidation,
   nameValidation,
@@ -14,7 +13,7 @@ import Link from "next/link";
 import { AuthProps, Storage } from "./types";
 import { Auth } from "@/components/Header/types";
 import { useDispatch } from "react-redux";
-import { addStateItems, changeStateAuth, createStateUser } from "@/redux/state";
+import { changeStateAuth, createStateUser } from "@/redux/state";
 
 export const Register = ({ onClose, setAuthType }: AuthProps) => {
   const dispatch = useDispatch();
@@ -71,20 +70,16 @@ export const Register = ({ onClose, setAuthType }: AuthProps) => {
         try {
           const res = await registration({ name, email, nickname, password });
           if (res.status === 200) {
-            const { token, name, nickname, email, id } = res.data;
-            const user = { name, nickname, email, id };
+            const { token, name, nickname, email, id, friend, list } = res.data;
+            const user = { name, nickname, email, id, friend, list };
             localStorage.setItem(Storage.Token, token);
             dispatch(createStateUser(user));
             dispatch(changeStateAuth(true));
-            const listRes = await getList(token);
-            if (listRes.status === 200) {
-              dispatch(addStateItems(listRes.data));
-            }
+
             onClose();
           }
         } catch (e: any) {
-          console.error(e);
-          toast.error(e.response?.data.message);
+          console.error(e.response?.data.message);
         }
       };
       registrationUser();

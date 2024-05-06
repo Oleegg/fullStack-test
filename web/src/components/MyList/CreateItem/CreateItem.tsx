@@ -1,13 +1,15 @@
 import { TextInput } from "@/components/Inputs";
-import "./CreateList.scss";
+import "./CreateItem.scss";
 import { ChangeEvent, useState } from "react";
 import { Button } from "@/components/Button";
-import { useDispatch } from "react-redux";
-import { addStateItem } from "@/redux/state";
-import { createItem } from "@/api/requests";
+import { useDispatch, useSelector } from "react-redux";
 import { Storage } from "@/components/Auth/types";
+import { changeUser } from "@/api/requests";
+import { changeStateList } from "@/redux/state";
+import { State } from "@/redux/types";
 
-export const CreateList = () => {
+export const CreateItem = () => {
+  const user = useSelector((state: State) => state.user);
   const [item, setItem] = useState("");
   const dispatch = useDispatch();
 
@@ -20,9 +22,11 @@ export const CreateList = () => {
     if (item) {
       const token = localStorage.getItem(Storage.Token);
       if (token) {
-        const res = await createItem(item, token);
+        const newList = [...user.list, item];
+        const res = await changeUser(user.id, { list: newList }, token);
+        console.log(res);
         if (res.status === 200) {
-          dispatch(addStateItem(res.data));
+          dispatch(changeStateList(newList));
           setItem("");
         }
       }

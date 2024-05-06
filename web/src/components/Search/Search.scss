@@ -35,16 +35,27 @@
   }
 
   &__wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__content {
     display: flex;
     align-items: center;
     gap: 10px;
     margin-top: 10px;
     margin-left: auto;
-    width: 275px;
+    width: 270px;
     transition: all 1s;
   }
 }
 
-.search__wrapper.open {
-  width: 500px;
+.search__content.open {
+  width: 400px;
+}
+
+.search__content.btn {
+  width: 450px;
 }

@@ -11,10 +11,11 @@ export interface IUserRegister {
 }
 
 export type ChangeUser = {
-  email?: string;
   name?: string;
   nickname?: string;
   password?: string;
+  list?: string[];
+  friend?: string[];
 };
 
 export type AuthResponse = {
@@ -25,3 +26,6 @@ export type AuthResponse = {
   token: string;
 };
 //----------list--------------
+export type ChangeUserList = {
+  list: string;
+};

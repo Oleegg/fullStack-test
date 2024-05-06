@@ -6,8 +6,8 @@ import { Register } from "../Auth/Register";
 import { Auth } from "./types";
 import { Login } from "../Auth/Login";
 import { Storage } from "../Auth/types";
-import { getAuthUserData, getList } from "@/api/requests";
-import { addStateItems, changeStateAuth, createStateUser } from "@/redux/state";
+import { getAuthUserData } from "@/api/requests";
+import { changeStateAuth, createStateUser } from "@/redux/state";
 import { useDispatch } from "react-redux";
 import { Wrapper } from "../Wrapper";
 import Link from "next/link";
@@ -33,15 +33,19 @@ export const Header = () => {
       const getUserData = async () => {
         const res = await getAuthUserData(token);
         if (res.status === 200) {
-          const { token: newToken, name, nickname, email, id } = res.data;
-          const user = { name, email, id, nickname };
+          const {
+            token: newToken,
+            name,
+            nickname,
+            email,
+            id,
+            friend,
+            list,
+          } = res.data;
+          const user = { name, email, id, nickname, friend, list };
           localStorage.setItem(Storage.Token, newToken);
           dispatch(createStateUser(user));
           dispatch(changeStateAuth(true));
-          const listRes = await getList(token);
-          if (listRes.status === 200) {
-            dispatch(addStateItems(listRes.data));
-          }
         }
       };
       getUserData();
