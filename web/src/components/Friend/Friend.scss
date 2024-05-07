@@ -1,0 +1,19 @@
+.friend {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  &__list {
+  }
+  &__item {
+  }
+  &__deed-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  &__name {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+}

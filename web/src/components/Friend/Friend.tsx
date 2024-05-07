@@ -32,9 +32,11 @@ export const Friend = () => {
       {user.friend.length ? (
         isShowList ? (
           friendList.length ? (
-            <div>
+            <div className="friend__deed-list">
               {friendList.map((item, i) => (
-                <p key={i}>{item}</p>
+                <p className="friend__item" key={i}>
+                  {i + 1} {item}
+                </p>
               ))}
               <Button onClick={() => setIsShowList(false)}>
                 вернутся к списку друзей
@@ -44,9 +46,14 @@ export const Friend = () => {
             <h2>У этого друга нет списка добрых дел</h2>
           )
         ) : (
-          <div>
+          <div className="friend">
+            <h3>Список друзей</h3>
             {user.friend.map((f, i) => (
-              <p key={i} onClick={() => showFriendList(f)}>
+              <p
+                key={i}
+                onClick={() => showFriendList(f)}
+                className="friend__name"
+              >
                 {f}
               </p>
             ))}
